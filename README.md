@@ -1,3 +1,5 @@
+![Z Field Logo](static/logo.png)
+
 # Z Field
 
 A JAX package for predicting per-atom tensorial properties from atomistic
