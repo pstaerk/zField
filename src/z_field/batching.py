@@ -47,8 +47,7 @@ def unfolded_ghosts(
         [np.zeros((len(positions), 3), dtype=int), cell_shifts], axis=0
     )
     to_replicate = np.concatenate(
-        [np.arange(len(positions), dtype=int),
-         np.array(to_replicate, dtype=int)],
+        [np.arange(len(positions), dtype=int), np.array(to_replicate, dtype=int)],
         dtype=int,
     )
 

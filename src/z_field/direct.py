@@ -34,7 +34,6 @@ class PerParticleTensorPredictor(nn.Module):
         # Take only the non-pseudovector channels, feature away
         x = x[..., 0, :, 0]  # -> [...,N,9]
 
-        cg = e3x.so3.clebsch_gordan(max_degree1=1, max_degree2=1,
-                                    max_degree3=2)
+        cg = e3x.so3.clebsch_gordan(max_degree1=1, max_degree2=1, max_degree3=2)
         y = jnp.einsum("...l,nml->...nm", x, cg[1:, 1:, :])
         return y

@@ -17,8 +17,7 @@ def z_i_pbc(batch, params, q_function):
         return jnp.sum(qs), qs
 
     # gradient of sum_j q_j wrt. r_i,beta
-    d_sumq_drib, qs = jax.grad(calc_q_sc_sum, allow_int=True, has_aux=True,
-                               argnums=0)(
+    d_sumq_drib, qs = jax.grad(calc_q_sc_sum, allow_int=True, has_aux=True, argnums=0)(
         batch, params, mask
     )
 

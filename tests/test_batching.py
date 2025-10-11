@@ -10,12 +10,11 @@ class TestUnfoldedGhosts:
 
     def test_simple_cubic_cell(self):
         """Test with a simple cubic cell."""
-        atoms = Atoms("Si", positions=[(0, 0, 0)], cell=[5.0, 5.0, 5.0],
-                      pbc=True)
+        atoms = Atoms("Si", positions=[(0, 0, 0)], cell=[5.0, 5.0, 5.0], pbc=True)
         cutoff = 3.0
 
         result = unfolded_ghosts(atoms, cutoff)
-        (all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate) = result
+        all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate = result
 
         # Basic checks
         assert len(all_nodes) >= 1
@@ -28,8 +27,7 @@ class TestUnfoldedGhosts:
         cutoff = 3.0
 
         result = unfolded_ghosts(atoms, cutoff)
-        (all_nodes, all_positions, sD, si, sj,
-         unit_cell_mask, to_replicate) = result
+        all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate = result
 
         # Check edges exist
         assert len(si) > 0
@@ -49,8 +47,7 @@ class TestUnfoldedGhosts:
         cutoff = 4.0
 
         result = unfolded_ghosts(atoms, cutoff)
-        (all_nodes, all_positions, sD, si, sj,
-         unit_cell_mask, to_replicate) = result
+        all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate = result
 
         n_nodes = len(all_nodes)
         n_edges = len(si)
