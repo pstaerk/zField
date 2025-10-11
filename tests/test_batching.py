@@ -43,8 +43,9 @@ class TestUnfoldedGhosts:
 
     def test_output_shapes(self):
         """Test output array shapes."""
-        atoms = bulk("Al", "fcc", a=4.05)
+        atoms = bulk("Al", "fcc", a=2.05)
         cutoff = 4.0
+        original_positions = atoms.positions.copy()
 
         result = unfolded_ghosts(atoms, cutoff)
         all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate = result
@@ -60,3 +61,6 @@ class TestUnfoldedGhosts:
         assert sD.shape == (n_edges, 3)
         assert si.shape == (n_edges,)
         assert sj.shape == (n_edges,)
+        assert all_positions[unit_cell_mask].shape[0] == len(original_positions)
+        assert np.all(all_positions[unit_cell_mask] == original_positions)
+
