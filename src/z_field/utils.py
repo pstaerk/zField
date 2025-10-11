@@ -8,7 +8,7 @@ def distribute_excess_charge(apt, batch):
     charges_to_redistribute = jnp.where(
         num_active_atoms > 0,
         excess_charge / num_active_atoms,
-        jnp.zeros_like(excess_charge)
+        jnp.zeros_like(excess_charge),
     )  # Shape: (3, 3)
     apt -= charges_to_redistribute
     apt *= batch.node_mask[..., None, None]  # apply mask

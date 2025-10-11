@@ -1,6 +1,7 @@
-# z_tensor
+# Z Field
 
-A Python package for tensor operations.
+A JAX package for predicting per-atom tensorial properties from atomistic
+machine learned interatomic potentials.
 
 ## Installation
 
@@ -32,7 +33,7 @@ pytest --cov=z_tensor --cov-report=html
 ## Usage
 
 ```python
-import z_tensor
+import z_field
 
 # Your code here
 ```

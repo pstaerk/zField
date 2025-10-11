@@ -1,5 +1,4 @@
 import numpy as np
-import pytest
 from ase import Atoms
 from ase.build import bulk
 
@@ -11,17 +10,12 @@ class TestUnfoldedGhosts:
 
     def test_simple_cubic_cell(self):
         """Test with a simple cubic cell."""
-        atoms = Atoms(
-            'Si',
-            positions=[(0, 0, 0)],
-            cell=[5.0, 5.0, 5.0],
-            pbc=True
-        )
+        atoms = Atoms("Si", positions=[(0, 0, 0)], cell=[5.0, 5.0, 5.0],
+                      pbc=True)
         cutoff = 3.0
 
         result = unfolded_ghosts(atoms, cutoff)
-        (all_nodes, all_positions, sD, si, sj,
-         unit_cell_mask, to_replicate) = result
+        (all_nodes, all_positions, sD, si, sj, unit_cell_mask, to_replicate) = result
 
         # Basic checks
         assert len(all_nodes) >= 1
@@ -30,7 +24,7 @@ class TestUnfoldedGhosts:
 
     def test_fcc_copper(self):
         """Test with FCC copper structure."""
-        atoms = bulk('Cu', 'fcc', a=3.6)
+        atoms = bulk("Cu", "fcc", a=3.6)
         cutoff = 3.0
 
         result = unfolded_ghosts(atoms, cutoff)
@@ -51,7 +45,7 @@ class TestUnfoldedGhosts:
 
     def test_output_shapes(self):
         """Test output array shapes."""
-        atoms = bulk('Al', 'fcc', a=4.05)
+        atoms = bulk("Al", "fcc", a=4.05)
         cutoff = 4.0
 
         result = unfolded_ghosts(atoms, cutoff)

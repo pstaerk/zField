@@ -1,8 +1,12 @@
 """Batching utilities for z_field package."""
+
 import numpy as np
 
 
-def unfolded_ghosts(atoms, cutoff,):
+def unfolded_ghosts(
+    atoms,
+    cutoff,
+):
     """Builds all ghost atoms explicitly.
 
     :atoms: ase.Atoms object with periodic boundary conditions
@@ -20,15 +24,13 @@ def unfolded_ghosts(atoms, cutoff,):
 
     """
     import vesin
+
     nl_calc = vesin.NeighborList(cutoff=cutoff, full_list=True)
 
     # 1. Find all neighbors, including those in periodic images
     positions = atoms.positions
     i_p, j_p, S_p = nl_calc.compute(
-        points=positions,
-        box=atoms.cell,
-        periodic=True,
-        quantities="ijS"
+        points=positions, box=atoms.cell, periodic=True, quantities="ijS"
     )
     # Find all unique (shift, atom_index) pairs
     replicas = np.unique(np.concatenate([S_p, j_p[:, None]], axis=-1), axis=0)
@@ -41,11 +43,14 @@ def unfolded_ghosts(atoms, cutoff,):
     to_replicate = to_replicate.flatten().astype(int)
 
     # 3. Construct the supercell positions and node types
-    cell_shifts = np.concatenate([np.zeros((len(positions), 3), dtype=int),
-                                  cell_shifts], axis=0)
-    to_replicate = np.concatenate([np.arange(len(positions), dtype=int),
-                                   np.array(to_replicate, dtype=int)],
-                                  dtype=int)
+    cell_shifts = np.concatenate(
+        [np.zeros((len(positions), 3), dtype=int), cell_shifts], axis=0
+    )
+    to_replicate = np.concatenate(
+        [np.arange(len(positions), dtype=int),
+         np.array(to_replicate, dtype=int)],
+        dtype=int,
+    )
 
     unit_cell_mask = np.zeros(len(to_replicate), dtype=bool)
     unit_cell_mask[: len(positions)] = True
