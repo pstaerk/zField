@@ -28,6 +28,8 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "numpy>=1.20.0",
+        "vesin>=0.3.8",
+        "jax>=0.3.25",
     ],
     extras_require={
         "dev": [
