@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="z_tensor",
+    name="z_field",
     version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
-    description="A Python package for tensor operations",
+    author="Philipp Stärk",
+    author_email="philipp.staerk@pm.me",
+    description="A Python package for polar tensor predictions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/z_tensor",
+    url="https://github.com/pstaerk/zField",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     classifiers=[
