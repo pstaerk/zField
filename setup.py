@@ -28,7 +28,7 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "numpy>=1.20.0",
-        "vesin>=0.3.8",
+        "vesin @ git+https://github.com/Luthaf/vesin.git@v0.3.8",
         "jax>=0.3.25",
         "e3x>=1.0.0",
         "ase>=3.0.0",
