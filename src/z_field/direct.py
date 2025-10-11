@@ -3,6 +3,7 @@ import jax.numpy as jnp
 import e3x
 from flax import linen as nn
 
+
 class PerParticleTensorPredictor(nn.Module):
     features: int = 128
 

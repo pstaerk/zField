@@ -30,6 +30,7 @@ setup(
         "numpy>=1.20.0",
         "vesin>=0.3.8",
         "jax>=0.3.25",
+        "e3x>=1.0.0",
     ],
     extras_require={
         "dev": [
