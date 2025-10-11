@@ -1,7 +1,3 @@
-"""z_tensor - A Python package for tensor operations."""
+"""z_field - A Python package for tensor predictions."""
 
 __version__ = "0.1.0"
-
-from .core import example_function
-
-__all__ = ["example_function"]
