@@ -63,4 +63,3 @@ class TestUnfoldedGhosts:
         assert sj.shape == (n_edges,)
         assert all_positions[unit_cell_mask].shape[0] == len(original_positions)
         assert np.all(all_positions[unit_cell_mask] == original_positions)
-
