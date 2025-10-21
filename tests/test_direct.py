@@ -132,7 +132,7 @@ class TestPerParticleTensorPredictor:
 
         variables = model.init(rng_key, spherical_features)
         loss, grads = jax.value_and_grad(loss_fn)(variables, spherical_features)
-        print(f'{loss=}')
+        print(f"{loss=}")
 
         # Check that loss is finite
         assert jnp.isfinite(loss), "Loss is not finite"
