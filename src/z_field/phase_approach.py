@@ -1,4 +1,5 @@
-from typing import Callable, Any
+from typing import Any, Callable
+
 import jax
 import jax.numpy as jnp
 
