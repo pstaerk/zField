@@ -23,7 +23,7 @@ class TestUnfoldedGhosts:
 
     def test_fcc_copper(self):
         """Test with FCC copper structure."""
-        atoms = bulk("Cu", "fcc", a=3.6)
+        atoms = bulk("Cu", "fcc", a=3.6, cubic=True)
         cutoff = 3.0
 
         result = unfolded_ghosts(atoms, cutoff)
@@ -43,7 +43,7 @@ class TestUnfoldedGhosts:
 
     def test_output_shapes(self):
         """Test output array shapes."""
-        atoms = bulk("Al", "fcc", a=2.05)
+        atoms = bulk("Al", "fcc", a=2.05, cubic=True)
         atoms.cell *= 2  # Make cell larger such that there are no ghosts
         atoms.pbc = True
         cutoff = 4.0

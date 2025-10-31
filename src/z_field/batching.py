@@ -23,6 +23,11 @@ def unfolded_ghosts(
                          atoms
 
     """
+    # we do NOT support triclinic cells here yet, so we assert
+    assert np.all(
+        np.isclose(atoms.cell, np.diag(np.diag(atoms.cell)))
+    ), "Triclinic cells are not supported."
+
     import vesin
 
     nl_calc = vesin.NeighborList(cutoff=cutoff, full_list=True)
