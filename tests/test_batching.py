@@ -44,6 +44,8 @@ class TestUnfoldedGhosts:
     def test_output_shapes(self):
         """Test output array shapes."""
         atoms = bulk("Al", "fcc", a=2.05)
+        atoms.cell *= 2  # Make cell larger such that there are no ghosts
+        atoms.pbc = True
         cutoff = 4.0
         original_positions = atoms.positions.copy()
 
