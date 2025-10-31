@@ -3,6 +3,22 @@ import jax.numpy as jnp
 
 
 def z_i_pbc(batch, params, q_function):
+    """Calculate a tensorial per-atom property that is the derivative of a global sum.
+
+    This computes z_i^{alpha,beta} = ∂/∂r_i,beta ( sum_j q_j * r_j,alpha )
+    where q_j is a scalar property predicted by q_function for atom j.
+    This specifically respects periodic boundary conditions by using unfolded positions
+    which may be calculated from the `batching` module.
+
+    Args:
+        batch: Batch object containing unfolded positions and neighbor info.
+        params: Model parameters for q_function.
+        q_function: Function that predicts scalar property q given batch, params,
+            and edge vectors.
+        
+    Returns:
+        jnp.ndarray: Effective (per atom) tensor of shape (n_atoms, 3, 3).
+    """
     mask = batch.unit_cell_mask
     to_replicate = batch.to_replicate_idx
     nr_nodes = batch.unfolded_nodes.shape[0]
