@@ -1,4 +1,4 @@
-"""Direct prediction of polar tensors from local environments."""
+"""Direct prediction of tensors from local environments."""
 
 import e3x
 import jax.numpy as jnp

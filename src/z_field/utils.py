@@ -1,17 +1,23 @@
 import jax.numpy as jnp
 
 
-def distribute_excess_charge(apt, batch):
-    """Distribute excess charge from acoustic sum rule equally to all atoms."""
+def distribute_excess_charge(apt, node_mask):
+    """Distribute excess charge from acoustic sum rule equally to all atoms.
+
+    Args:
+        apt: jnp.ndarray of shape (..., N, 3, 3), predicted atomic polar
+        tensors
+        node_mask: jnp.ndarray of shape (..., N), mask for active atoms
+    """
     excess_charge = acoustic_sum_rule(apt)
-    num_active_atoms = jnp.sum(batch.node_mask)
+    num_active_atoms = jnp.sum(node_mask)
     charges_to_redistribute = jnp.where(
         num_active_atoms > 0,
         excess_charge / num_active_atoms,
         jnp.zeros_like(excess_charge),
     )  # Shape: (3, 3)
     apt -= charges_to_redistribute
-    apt *= batch.node_mask[..., None, None]  # apply mask
+    apt *= node_mask[..., None, None]  # apply mask
     return apt
 
 
