@@ -25,9 +25,9 @@ def pol_function_diffable(apply_fn: Callable, params: Any, batch: Any, alpha: in
     approach.
 
     Args:
-        apply_fn: Model function that takes (params, rijs, centers, others,
-                  nodes, node_to_graph, edge_mask, node_mask) and returns
-                  (energy, charges, screen).
+        apply_fn: Model function that takes (params, batch) and returns
+                  (q, screen) where q are charges and screen is a screening factor.
+                  Must be differentiable with respect to batch.positions.
         params: Model parameters.
         batch: Batch object containing atomic structure information.
         alpha: Cartesian component index (0, 1, or 2 for x, y, z).
@@ -35,17 +35,7 @@ def pol_function_diffable(apply_fn: Callable, params: Any, batch: Any, alpha: in
     Returns:
         complex: Complex sum of values for the given component.
     """
-    rijs = calc_rijs(batch)
-    _, q, screen = apply_fn(
-        params,
-        rijs,
-        batch.centers,
-        batch.others,
-        batch.nodes,
-        batch.node_to_graph,
-        batch.edge_mask,
-        batch.node_mask,
-    )
+    q, screen = apply_fn(params, batch)
 
     charges = q.flatten() * screen
     box = batch.cell
@@ -94,7 +84,8 @@ def z_i_alpha_beta(apply_fn: Callable, params: Any, batch: Any):
     for all atoms and all Cartesian components.
 
     Args:
-        apply_fn: Model function that predicts charges.
+        apply_fn: Model function that takes (params, batch) and returns
+                  (q, screen). Must be differentiable with respect to batch.positions.
         params: Model parameters.
         batch: Batch object containing atomic structure information.
 
