@@ -9,7 +9,7 @@ from typing import Any, Callable
 
 import jax
 import jax.numpy as jnp
-import utils
+import z_field.utils as utils
 
 
 def pol_function_npbc(charge_fn: Callable, params: Any, batch: Any, alpha: int):
