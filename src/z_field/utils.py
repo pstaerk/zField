@@ -34,3 +34,20 @@ def acoustic_sum_rule(apts):
     """
     excess_charge = jnp.einsum("...nij->...ij", apts)
     return excess_charge
+
+
+def calc_rijs(batch, pbc=True):
+    """Calculate relative position vectors between atoms.
+
+    Args:
+        batch: Batch object containing positions, centers, others,
+               cell_shifts, and cell.
+        pbc: Whether to apply periodic boundary conditions.
+
+    Returns:
+        jnp.ndarray: Relative position vectors.
+    """
+    rij = batch.positions[batch.others] - batch.positions[batch.centers]
+    if pbc:
+        rij += jnp.einsum("pA,Aa->pa", batch.cell_shifts, batch.cell)
+    return rij

@@ -9,23 +9,7 @@ from typing import Any, Callable
 
 import jax
 import jax.numpy as jnp
-
-
-def calc_rijs(batch, pbc=True):
-    """Calculate relative position vectors between atoms.
-
-    Args:
-        batch: Batch object containing positions, centers, others,
-               cell_shifts, and cell.
-        pbc: Whether to apply periodic boundary conditions.
-
-    Returns:
-        jnp.ndarray: Relative position vectors.
-    """
-    rij = batch.positions[batch.others] - batch.positions[batch.centers]
-    if pbc:
-        rij += jnp.einsum("pA,Aa->pa", batch.cell_shifts, batch.cell)
-    return rij
+import utils
 
 
 def pol_function_npbc(charge_fn: Callable, params: Any, batch: Any, alpha: int):
@@ -46,7 +30,8 @@ def pol_function_npbc(charge_fn: Callable, params: Any, batch: Any, alpha: int):
     Returns:
         float: Polarization component for the given direction.
     """
-    charges = charge_fn(params, batch).flatten()
+    rijs = utils.calc_rijs(batch, pbc=False)
+    charges = charge_fn(params, batch, rijs).flatten()
     return jnp.sum(batch.positions[:, alpha] * charges * batch.node_mask)
 
 
@@ -57,7 +42,7 @@ def z_i_alpha_beta_npbc(charge_fn: Callable, params: Any, batch: Any):
     all Cartesian components without periodic boundary conditions.
 
     Args:
-        charge_fn: Function that takes (params, batch) and returns charges.
+        charge_fn: Function that takes (params, batch, rijs) and returns charges.
                    Must be differentiable with respect to batch.positions.
                    The user is responsible for including screening or other
                    transformations in this function.
